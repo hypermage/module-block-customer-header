@@ -1,0 +1,47 @@
+<?php
+
+use Hypermage\ComponentCustomerHeader\ViewModel\Header as ViewModelHeader;
+use Hypermage\Core\ViewModel\Htmx;
+use Magento\Framework\Escaper;
+use Magento\Theme\Block\Html\Header;
+
+/** @var Header $block */
+/** @var Escaper $escaper */
+
+$welcomeMessage = $block->getWelcome();
+
+/** @var Htmx $htmx */
+$htmx = $block->getHtmx();
+
+$customer = null;
+$hxRequest = '';
+
+if ($htmx->isHtmxRequest()) {
+    /** @var ViewModelHeader $viewModel */
+    $viewModel = $block->getViewModel();
+
+    $customer = $viewModel->getCustomerData();
+} else {
+    // okay so we need to make an abstraction layer that makes it so developers don't have to deal with it if they don't want to
+    // but we also need an advanced api which will allow developers familiar with htmx achieve exactly what they want
+    $hxRequestUrl = $htmx->getRequestUrl($block);
+    $hxRequest = 'hx-get="'. $hxRequestUrl . '" hx-trigger="load" hx-target=".greet.welcome" hx-swap="outerHTML" hx-params';
+}
+?>
+
+<?php if ($block->getShowPart() == 'welcome'): ?>
+    <li class="greet welcome" <?= $hxRequest ?>>
+        <?php if ($customer && $customer->getId()): ?>
+            <span class="logged-in">
+                <?= $escaper->escapeHtml(__('Welcome, %1!', $customer->getName())) ?>
+            </span>
+        <?php else: ?>
+            <span class="not-logged-in">
+                <?= $escaper->escapeHtml($welcomeMessage) ?>
+            </span>
+            <?= $block->getBlockHtml('header.additional') ?>
+        <?php endif; ?>
+    </li>
+<?php elseif ($block->getShowPart() == 'other'): ?>
+    <?= $block->getChildHtml() ?>
+<?php endif ?>

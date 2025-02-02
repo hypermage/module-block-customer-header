@@ -1,0 +1,21 @@
+{
+  "name": "hypermage/module-component-customer-header",
+  "version": "1.0.0",
+  "description": "N/A",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "hypermage/module-core": "*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Hypermage\\ComponentCustomerHeader\\": ""
+    }
+  }
+}

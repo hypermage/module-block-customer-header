@@ -19,6 +19,5 @@ readonly class Header implements ArgumentInterface
     public function getCustomerData(): Customer
     {
         return $this->customerSessionFactory->create()->getCustomer();
-
     }
 }

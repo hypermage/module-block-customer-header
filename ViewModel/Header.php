@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hypermage\ComponentCustomerHeader\ViewModel;
+namespace Hypermage\BlockCustomerHeader\ViewModel;
 
 use Magento\Customer\Model\Customer;
 use Magento\Framework\View\Element\Block\ArgumentInterface;

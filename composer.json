@@ -1,5 +1,5 @@
 {
-  "name": "hypermage/module-component-customer-header",
+  "name": "hypermage/module-block-customer-header",
   "version": "1.0.0",
   "description": "N/A",
   "type": "magento2-module",
@@ -15,7 +15,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "Hypermage\\ComponentCustomerHeader\\": ""
+      "Hypermage\\ComponentBlockHeader\\": ""
     }
   }
 }

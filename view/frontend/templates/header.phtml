@@ -13,24 +13,23 @@ $viewModel = $block->getViewModel();
 
 /** @var Htmx $htmx */
 $htmx = $block->getHtmx();
+$isHtmxRequest = $htmx->isHtmxRequest();
 
-$hxParams = $htmx->getHxParams($block);
-$hxParams->setSwap('outerHTML');
-
-$customer = null;
-
-if ($htmx->isHtmxRequest()) {
-    $customer = $viewModel->getCustomerData();
-} else {
-    $hxParams->addTrigger('load');
-}
-
-
+$customer = $isHtmxRequest ? $viewModel->getCustomerData() : null;
+$hxTrigger = $isHtmxRequest ? null : 'revealed';
 $welcomeMessage = $block->getWelcome();
+
+$hxUrl = $htmx->getUrl('/hypermage/block/block', [
+    'block_specification' => $htmx->getBlockSpecification($block)->toArray(),
+]);
 ?>
 
 <?php if ($block->getShowPart() == 'welcome'): ?>
-    <li class="greet welcome" <?= $hxParams ?>>
+    <li class="greet welcome"
+        hx-get="<?= $hxUrl ?>"
+        hx-trigger="<?= $hxTrigger ?>"
+        hx-swap="outerHTML"
+    >
         <?php if ($customer?->getId()): ?>
             <span class="logged-in">
                 <?= $escaper->escapeHtml(__('Welcome, %1!', $customer->getName())) ?>

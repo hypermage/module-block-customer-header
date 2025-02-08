@@ -7,9 +7,8 @@
                 <argument name="template" xsi:type="string">Hypermage_BlockCustomerHeader::header.phtml</argument>
             </action>
             <arguments>
-                <argument name="show_part" xsi:type="string">welcome</argument>
-                <argument name="view_model" xsi:type="object">Hypermage\BlockCustomerHeader\ViewModel\Header</argument>
-                <argument name="htmx" xsi:type="object">Hypermage\Core\ViewModel\Htmx</argument>
+                <argument name="htmx_view_model" xsi:type="object">Hypermage\Core\ViewModel\Htmx</argument>
+                <argument name="header_view_model" xsi:type="object">Hypermage\BlockCustomerHeader\ViewModel\Header</argument>
             </arguments>
         </referenceBlock>
     </body>

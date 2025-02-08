@@ -1,33 +1,33 @@
 <?php
 
-use Hypermage\BlockCustomerHeader\ViewModel\Header as ViewModelHeader;
-use Hypermage\Core\ViewModel\Htmx;
+use Hypermage\BlockCustomerHeader\ViewModel\Header as HeaderViewModel;
+use Hypermage\Core\ViewModel\Htmx as HtmxViewModel;
 use Magento\Framework\Escaper;
 use Magento\Theme\Block\Html\Header;
 
 /** @var Header $block */
 /** @var Escaper $escaper */
 
-/** @var ViewModelHeader $viewModel */
-$viewModel = $block->getViewModel();
+/** @var HtmxViewModel $htmViewModel */
+$htmViewModel = $block->getData('htmx_view_model');
+$isHtmxRequest = $htmViewModel->isHtmxRequest();
 
-/** @var Htmx $htmx */
-$htmx = $block->getHtmx();
-$isHtmxRequest = $htmx->isHtmxRequest();
+/** @var HeaderViewModel $headerViewModel */
+$headerViewModel = $block->getData('header_view_model');
 
-$customer = $isHtmxRequest ? $viewModel->getCustomerData() : null;
+$customer = $isHtmxRequest ? $headerViewModel->getCustomerData() : null;
 $hxTrigger = $isHtmxRequest ? null : 'revealed';
 $welcomeMessage = $block->getWelcome();
 
-$hxUrl = $htmx->getUrl('/hypermage/block/block', [
-    'block_specification' => $htmx->getBlockSpecification($block)->toArray(),
+$hxUrl = $htmViewModel->getUrl('/hypermage/block/block', [
+    'block_specification' => $htmViewModel->getBlockSpecification($block)->toArray(),
 ]);
 ?>
 
 <?php if ($block->getShowPart() == 'welcome'): ?>
     <li class="greet welcome"
-        hx-get="<?= $hxUrl ?>"
         hx-trigger="<?= $hxTrigger ?>"
+        hx-get="<?= $hxUrl ?>"
         hx-swap="outerHTML"
     >
         <?php if ($customer?->getId()): ?>

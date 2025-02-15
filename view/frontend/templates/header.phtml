@@ -16,7 +16,7 @@ $isHtmxRequest = $htmViewModel->isHtmxRequest();
 $headerViewModel = $block->getData('header_view_model');
 
 $customer = $isHtmxRequest ? $headerViewModel->getCustomerData() : null;
-$hxTrigger = $isHtmxRequest ? null : 'revealed';
+$hxTrigger = $isHtmxRequest ? 'none' : 'revealed';
 $welcomeMessage = $block->getWelcome();
 
 $hxUrl = $htmViewModel->getUrl('/hypermage/block/block', [
